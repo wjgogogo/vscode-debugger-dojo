@@ -1,0 +1,45 @@
+{
+  // 编辑器设置
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // TypeScript 设置
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // 文件关联
+  "files.associations": {
+    "*.css": "css",
+    "*.json": "jsonc"
+  },
+
+  // 调试设置
+  "debug.javascript.autoAttachFilter": "smart",
+  "debug.javascript.codelens.npmScripts": "top",
+
+  // Jest 设置
+  "jest.autoRun": "off",
+
+  // Rust 设置
+  "rust-analyzer.check.command": "clippy",
+
+  // 排除文件
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/target": true,
+    "**/.git": true
+  },
+
+  // 搜索排除
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/target": true,
+    "**/.git": true,
+    "**/pnpm-lock.yaml": true,
+    "**/Cargo.lock": true
+  }
+}

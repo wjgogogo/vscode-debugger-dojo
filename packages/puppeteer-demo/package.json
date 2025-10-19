@@ -1,0 +1,17 @@
+{
+  "name": "@debugger-dojo/puppeteer-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "scrape": "node scripts/scrape.js",
+    "test": "node scripts/test-ui.js",
+    "screenshot": "node scripts/screenshot.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  }
+}

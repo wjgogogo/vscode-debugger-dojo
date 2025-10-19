@@ -1,0 +1,16 @@
+{
+  "name": "vscode-debugger-dojo",
+  "version": "1.0.0",
+  "description": "VSCode Debugger 全面示例教程",
+  "private": true,
+  "scripts": {
+    "clean": "pnpm -r clean"
+  },
+  "keywords": [
+    "vscode",
+    "debugger",
+    "examples"
+  ],
+  "author": "",
+  "license": "MIT"
+}

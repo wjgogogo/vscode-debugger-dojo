@@ -1,0 +1,443 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // ========================================
+    // 🚀 快捷调试：按 F5 直接调试当前测试文件
+    // ========================================
+    // 说明：打开任意测试文件后，按 F5 即可开始调试
+    // 支持：Jest (.test.ts/.test.js) 和 Vitest (.test.ts)
+
+    // Jest 测试文件快捷调试（适用于 jest-demo 项目）
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🚀 Debug Current File - Jest",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "${file}",
+        "--runInBand",
+        "--no-coverage",
+        "--testTimeout=30000"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "outputCapture": "std"
+    },
+
+    // Vitest 测试文件快捷调试（适用于 vitest-demo 项目）
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🚀 Debug Current File - Vitest",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "exec",
+        "vitest",
+        "run",
+        "${file}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    // ========================================
+    // Vite + React 调试配置
+    // ========================================
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Vite React - Launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/packages/vite-react-demo",
+      "sourceMaps": true,
+      "preLaunchTask": "vite-react: dev",
+      "runtimeArgs": [
+        "--auto-open-devtools-for-tabs"
+      ]
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Vite React - Launch (保存登录状态)",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/packages/vite-react-demo",
+      "sourceMaps": true,
+      "preLaunchTask": "vite-react: dev",
+      "userDataDir": "${workspaceFolder}/packages/vite-react-demo/.chrome-data",
+      "runtimeArgs": [
+        "--auto-open-devtools-for-tabs"
+      ]
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Vite React - Attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/packages/vite-react-demo",
+      "sourceMaps": true
+    },
+
+    // ========================================
+    // Next.js 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Next.js - Full Stack",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["next", "dev"],
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      },
+      "cwd": "${workspaceFolder}/packages/nextjs-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Next.js - Server",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["next", "dev"],
+      "cwd": "${workspaceFolder}/packages/nextjs-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Next.js - Attach Client",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/packages/nextjs-demo",
+      "sourceMaps": true
+    },
+
+    // ========================================
+    // Webpack 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Webpack - Build",
+      "program": "${workspaceFolder}/node_modules/.bin/webpack",
+      "args": [
+        "--config",
+        "${workspaceFolder}/packages/webpack-demo/webpack/webpack.config.js",
+        "--mode",
+        "development"
+      ],
+      "cwd": "${workspaceFolder}/packages/webpack-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Webpack - Dev Server",
+      "program": "${workspaceFolder}/node_modules/.bin/webpack",
+      "args": [
+        "serve",
+        "--config",
+        "${workspaceFolder}/packages/webpack-demo/webpack/webpack.config.js",
+        "--mode",
+        "development"
+      ],
+      "cwd": "${workspaceFolder}/packages/webpack-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    // ========================================
+    // TypeScript 独立调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "TypeScript - Current File (ts-node)",
+      "program": "${file}",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "cwd": "${fileDirname}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "TS_NODE_PROJECT": "${workspaceFolder}/packages/typescript-demo/tsconfig.json"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "TypeScript - Current File (tsx)",
+      "program": "${file}",
+      "runtimeArgs": ["-r", "tsx/cjs"],
+      "cwd": "${fileDirname}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    // ========================================
+    // Node.js 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Node.js - Launch",
+      "program": "${workspaceFolder}/packages/node-demo/src/index.ts",
+      "runtimeArgs": ["-r", "tsx/cjs"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "3000"
+      },
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Node.js - Attach",
+      "port": 9229,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    // ========================================
+    // Jest 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest - Current File",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "${relativeFile}",
+        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js",
+        "--runInBand",
+        "--no-coverage"
+      ],
+      "cwd": "${workspaceFolder}/packages/jest-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest - All Tests",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runInBand",
+        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js"
+      ],
+      "cwd": "${workspaceFolder}/packages/jest-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+
+    // ========================================
+    // Vitest 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Vitest - Current File",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "vitest",
+        "run",
+        "${relativeFile}"
+      ],
+      "cwd": "${workspaceFolder}/packages/vitest-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Vitest - All Tests",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "vitest",
+        "run"
+      ],
+      "cwd": "${workspaceFolder}/packages/vitest-demo",
+      "console": "integratedTerminal"
+    },
+
+    // ========================================
+    // npm script 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "npm script - Run Script File",
+      "program": "${file}",
+      "cwd": "${fileDirname}/..",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "npm script - Build",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "build"],
+      "cwd": "${workspaceFolder}/packages/npm-script-demo",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "npm script - Build Production",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "build:prod"],
+      "cwd": "${workspaceFolder}/packages/npm-script-demo",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "npm script - Deploy",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "deploy"],
+      "cwd": "${workspaceFolder}/packages/npm-script-demo",
+      "console": "integratedTerminal"
+    },
+
+    // ========================================
+    // Puppeteer 调试配置
+    // ========================================
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Puppeteer - Current File",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
+        "HEADLESS": "false",
+        "SLOWMO": "100"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Puppeteer - Scrape (有头模式 + user-data-dir)",
+      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/scrape.js",
+      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
+      "console": "integratedTerminal",
+      "env": {
+        "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
+        "HEADLESS": "false",
+        "SLOWMO": "100",
+        "DEVTOOLS": "true"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Puppeteer - Scrape (无头模式)",
+      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/scrape.js",
+      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
+      "console": "integratedTerminal",
+      "env": {
+        "HEADLESS": "true"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Puppeteer - Test UI (保存登录状态)",
+      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/test-ui.js",
+      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
+      "console": "integratedTerminal",
+      "env": {
+        "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
+        "HEADLESS": "false",
+        "SLOWMO": "50"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Puppeteer - Screenshot (快速模式)",
+      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/screenshot.js",
+      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
+      "console": "integratedTerminal",
+      "env": {
+        "HEADLESS": "true"
+      }
+    },
+
+    // ========================================
+    // Rust 调试配置
+    // ========================================
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Rust - Debug hello",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=hello",
+          "--package=rust-demo"
+        ],
+        "filter": {
+          "name": "hello",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}/packages/rust-demo"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Rust - Debug calculator",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=calculator",
+          "--package=rust-demo"
+        ],
+        "filter": {
+          "name": "calculator",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}/packages/rust-demo"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Rust - Debug Tests",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--package=rust-demo"
+        ],
+        "filter": {
+          "name": "rust-demo",
+          "kind": "lib"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}/packages/rust-demo"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "recommendations": [
+    // JavaScript/TypeScript
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // React
+    "dsznajder.es7-react-js-snippets",
+
+    // 测试
+    "orta.vscode-jest",
+    "zixuanchen.vitest-explorer",
+
+    // Rust
+    "rust-lang.rust-analyzer",
+    "vadimcn.vscode-lldb",
+
+    // 其他工具
+    "ms-vscode.vscode-typescript-next",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
