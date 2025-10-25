@@ -2,50 +2,69 @@
   "version": "0.2.0",
   "configurations": [
     // ========================================
-    // 🚀 快捷调试：按 F5 直接调试当前测试文件
+    // 📦 jest-demo
     // ========================================
-    // 说明：打开任意测试文件后，按 F5 即可开始调试
-    // 支持：Jest (.test.ts/.test.js) 和 Vitest (.test.ts)
-
-    // Jest 测试文件快捷调试（适用于 jest-demo 项目）
     {
       "type": "node",
       "request": "launch",
-      "name": "🚀 Debug Current File - Jest",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "name": "Jest - Current File",
+      "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
       "args": [
-        "${file}",
+        "${relativeFile}",
+        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js",
         "--runInBand",
-        "--no-coverage",
-        "--testTimeout=30000"
+        "--no-coverage"
       ],
+      "cwd": "${workspaceFolder}/packages/jest-demo",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}",
-      "skipFiles": ["<node_internals>/**"],
-      "outputCapture": "std"
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest - All Tests",
+      "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
+      "args": [
+        "--runInBand",
+        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js"
+      ],
+      "cwd": "${workspaceFolder}/packages/jest-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     },
 
-    // Vitest 测试文件快捷调试（适用于 vitest-demo 项目）
+    // ========================================
+    // 📦 vitest-demo
+    // ========================================
     {
       "type": "node",
       "request": "launch",
-      "name": "🚀 Debug Current File - Vitest",
+      "name": "Vitest - Current File",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": [
-        "exec",
         "vitest",
         "run",
-        "${file}"
+        "${relativeFile}"
       ],
+      "cwd": "${workspaceFolder}/packages/vitest-demo",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}",
-      "skipFiles": ["<node_internals>/**"]
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Vitest - All Tests",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "vitest",
+        "run"
+      ],
+      "cwd": "${workspaceFolder}/packages/vitest-demo",
+      "console": "integratedTerminal"
     },
 
     // ========================================
-    // Vite + React 调试配置
+    // 📦 vite-react-demo
     // ========================================
     {
       "type": "chrome",
@@ -82,7 +101,7 @@
     },
 
     // ========================================
-    // Next.js 调试配置
+    // 📦 nextjs-demo
     // ========================================
     {
       "type": "node",
@@ -121,7 +140,7 @@
     },
 
     // ========================================
-    // Webpack 调试配置
+    // 📦 webpack-demo
     // ========================================
     {
       "type": "node",
@@ -158,7 +177,7 @@
     },
 
     // ========================================
-    // TypeScript 独立调试配置
+    // 📦 typescript-demo
     // ========================================
     {
       "type": "node",
@@ -187,7 +206,7 @@
     },
 
     // ========================================
-    // Node.js 调试配置
+    // 📦 node-demo
     // ========================================
     {
       "type": "node",
@@ -214,69 +233,7 @@
     },
 
     // ========================================
-    // Jest 调试配置
-    // ========================================
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Jest - Current File",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": [
-        "${relativeFile}",
-        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js",
-        "--runInBand",
-        "--no-coverage"
-      ],
-      "cwd": "${workspaceFolder}/packages/jest-demo",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Jest - All Tests",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": [
-        "--runInBand",
-        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js"
-      ],
-      "cwd": "${workspaceFolder}/packages/jest-demo",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-
-    // ========================================
-    // Vitest 调试配置
-    // ========================================
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Vitest - Current File",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "vitest",
-        "run",
-        "${relativeFile}"
-      ],
-      "cwd": "${workspaceFolder}/packages/vitest-demo",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Vitest - All Tests",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "vitest",
-        "run"
-      ],
-      "cwd": "${workspaceFolder}/packages/vitest-demo",
-      "console": "integratedTerminal"
-    },
-
-    // ========================================
-    // npm script 调试配置
+    // 📦 npm-script-demo
     // ========================================
     {
       "type": "node",
@@ -316,7 +273,7 @@
     },
 
     // ========================================
-    // Puppeteer 调试配置
+    // 📦 puppeteer-demo
     // ========================================
     {
       "type": "node",
@@ -383,7 +340,7 @@
     },
 
     // ========================================
-    // Rust 调试配置
+    // 📦 rust-demo
     // ========================================
     {
       "type": "lldb",
