@@ -19,9 +19,7 @@
 
 ### 方式三：使用 VSCode Jest 扩展
 
-安装 [Jest Runner](https://marketplace.visualstudio.com/items?itemName=firsttris.vscode-jest-runner) 扩展后，可以：
-- 点击测试用例上方的 "Debug" 按钮
-- 右键测试用例选择 "Debug Jest"
+安装 [Jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest) 扩展后，可以在测试资源管理器中点击调试图标。
 
 ## 调试配置详解
 

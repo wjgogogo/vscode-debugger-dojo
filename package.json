@@ -12,5 +12,8 @@
     "examples"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
 }

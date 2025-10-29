@@ -17,7 +17,11 @@
       ],
       "cwd": "${workspaceFolder}/packages/jest-demo",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "1. Jest",
+        "order": 1
+      }
     },
     {
       "type": "node",
@@ -30,7 +34,11 @@
       ],
       "cwd": "${workspaceFolder}/packages/jest-demo",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "1. Jest",
+        "order": 2
+      }
     },
 
     // ========================================
@@ -41,26 +49,47 @@
       "request": "launch",
       "name": "Vitest - Current File",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "vitest",
-        "run",
-        "${relativeFile}"
-      ],
+      "runtimeArgs": ["vitest", "run", "${file}"],
       "cwd": "${workspaceFolder}/packages/vitest-demo",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "group": "2. Vitest",
+        "order": 1
+      }
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Vitest - All Tests",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "vitest",
-        "run"
-      ],
+      "runtimeArgs": ["vitest", "run"],
       "cwd": "${workspaceFolder}/packages/vitest-demo",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "2. Vitest",
+        "order": 2
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Vitest - Watch Mode",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["vitest"],
+      "cwd": "${workspaceFolder}/packages/vitest-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "group": "2. Vitest",
+        "order": 3
+      }
     },
 
     // ========================================
@@ -74,9 +103,11 @@
       "webRoot": "${workspaceFolder}/packages/vite-react-demo",
       "sourceMaps": true,
       "preLaunchTask": "vite-react: dev",
-      "runtimeArgs": [
-        "--auto-open-devtools-for-tabs"
-      ]
+      "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+      "presentation": {
+        "group": "3. Vite React",
+        "order": 1
+      }
     },
     {
       "type": "chrome",
@@ -87,9 +118,11 @@
       "sourceMaps": true,
       "preLaunchTask": "vite-react: dev",
       "userDataDir": "${workspaceFolder}/packages/vite-react-demo/.chrome-data",
-      "runtimeArgs": [
-        "--auto-open-devtools-for-tabs"
-      ]
+      "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+      "presentation": {
+        "group": "3. Vite React",
+        "order": 2
+      }
     },
     {
       "type": "chrome",
@@ -97,7 +130,11 @@
       "name": "Vite React - Attach",
       "port": 9222,
       "webRoot": "${workspaceFolder}/packages/vite-react-demo",
-      "sourceMaps": true
+      "sourceMaps": true,
+      "presentation": {
+        "group": "3. Vite React",
+        "order": 3
+      }
     },
 
     // ========================================
@@ -117,7 +154,11 @@
       "cwd": "${workspaceFolder}/packages/nextjs-demo",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "4. Next.js",
+        "order": 1
+      }
     },
     {
       "type": "node",
@@ -128,7 +169,11 @@
       "cwd": "${workspaceFolder}/packages/nextjs-demo",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "4. Next.js",
+        "order": 2
+      }
     },
     {
       "type": "chrome",
@@ -136,7 +181,11 @@
       "name": "Next.js - Attach Client",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/packages/nextjs-demo",
-      "sourceMaps": true
+      "sourceMaps": true,
+      "presentation": {
+        "group": "4. Next.js",
+        "order": 3
+      }
     },
 
     // ========================================
@@ -156,7 +205,11 @@
       "cwd": "${workspaceFolder}/packages/webpack-demo",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "5. Webpack",
+        "order": 1
+      }
     },
     {
       "type": "node",
@@ -173,7 +226,11 @@
       "cwd": "${workspaceFolder}/packages/webpack-demo",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "5. Webpack",
+        "order": 2
+      }
     },
 
     // ========================================
@@ -191,6 +248,10 @@
       "skipFiles": ["<node_internals>/**"],
       "env": {
         "TS_NODE_PROJECT": "${workspaceFolder}/packages/typescript-demo/tsconfig.json"
+      },
+      "presentation": {
+        "group": "6. TypeScript",
+        "order": 1
       }
     },
     {
@@ -202,7 +263,11 @@
       "cwd": "${fileDirname}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "6. TypeScript",
+        "order": 2
+      }
     },
 
     // ========================================
@@ -221,7 +286,11 @@
         "PORT": "3000"
       },
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "7. Node.js",
+        "order": 1
+      }
     },
     {
       "type": "node",
@@ -229,7 +298,11 @@
       "name": "Node.js - Attach",
       "port": 9229,
       "restart": true,
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "7. Node.js",
+        "order": 2
+      }
     },
 
     // ========================================
@@ -241,7 +314,11 @@
       "name": "npm script - Run Script File",
       "program": "${file}",
       "cwd": "${fileDirname}/..",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "presentation": {
+        "group": "8. NPM Scripts",
+        "order": 1
+      }
     },
     {
       "type": "node",
@@ -251,7 +328,11 @@
       "runtimeArgs": ["run", "build"],
       "cwd": "${workspaceFolder}/packages/npm-script-demo",
       "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "8. NPM Scripts",
+        "order": 2
+      }
     },
     {
       "type": "node",
@@ -260,7 +341,11 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "build:prod"],
       "cwd": "${workspaceFolder}/packages/npm-script-demo",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "presentation": {
+        "group": "8. NPM Scripts",
+        "order": 3
+      }
     },
     {
       "type": "node",
@@ -269,7 +354,11 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "deploy"],
       "cwd": "${workspaceFolder}/packages/npm-script-demo",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "presentation": {
+        "group": "8. NPM Scripts",
+        "order": 4
+      }
     },
 
     // ========================================
@@ -287,6 +376,10 @@
         "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
         "HEADLESS": "false",
         "SLOWMO": "100"
+      },
+      "presentation": {
+        "group": "9. Puppeteer",
+        "order": 1
       }
     },
     {
@@ -301,6 +394,10 @@
         "HEADLESS": "false",
         "SLOWMO": "100",
         "DEVTOOLS": "true"
+      },
+      "presentation": {
+        "group": "9. Puppeteer",
+        "order": 2
       }
     },
     {
@@ -312,6 +409,10 @@
       "console": "integratedTerminal",
       "env": {
         "HEADLESS": "true"
+      },
+      "presentation": {
+        "group": "9. Puppeteer",
+        "order": 3
       }
     },
     {
@@ -325,6 +426,10 @@
         "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
         "HEADLESS": "false",
         "SLOWMO": "50"
+      },
+      "presentation": {
+        "group": "9. Puppeteer",
+        "order": 4
       }
     },
     {
@@ -336,6 +441,10 @@
       "console": "integratedTerminal",
       "env": {
         "HEADLESS": "true"
+      },
+      "presentation": {
+        "group": "9. Puppeteer",
+        "order": 5
       }
     },
 
@@ -347,54 +456,54 @@
       "request": "launch",
       "name": "Rust - Debug hello",
       "cargo": {
-        "args": [
-          "build",
-          "--bin=hello",
-          "--package=rust-demo"
-        ],
+        "args": ["build", "--bin=hello", "--package=rust-demo"],
         "filter": {
           "name": "hello",
           "kind": "bin"
         }
       },
       "args": [],
-      "cwd": "${workspaceFolder}/packages/rust-demo"
+      "cwd": "${workspaceFolder}/packages/rust-demo",
+      "presentation": {
+        "group": "10. Rust",
+        "order": 1
+      }
     },
     {
       "type": "lldb",
       "request": "launch",
       "name": "Rust - Debug calculator",
       "cargo": {
-        "args": [
-          "build",
-          "--bin=calculator",
-          "--package=rust-demo"
-        ],
+        "args": ["build", "--bin=calculator", "--package=rust-demo"],
         "filter": {
           "name": "calculator",
           "kind": "bin"
         }
       },
       "args": [],
-      "cwd": "${workspaceFolder}/packages/rust-demo"
+      "cwd": "${workspaceFolder}/packages/rust-demo",
+      "presentation": {
+        "group": "10. Rust",
+        "order": 2
+      }
     },
     {
       "type": "lldb",
       "request": "launch",
       "name": "Rust - Debug Tests",
       "cargo": {
-        "args": [
-          "test",
-          "--no-run",
-          "--package=rust-demo"
-        ],
+        "args": ["test", "--no-run", "--package=rust-demo"],
         "filter": {
           "name": "rust-demo",
           "kind": "lib"
         }
       },
       "args": [],
-      "cwd": "${workspaceFolder}/packages/rust-demo"
+      "cwd": "${workspaceFolder}/packages/rust-demo",
+      "presentation": {
+        "group": "10. Rust",
+        "order": 3
+      }
     }
   ]
 }
