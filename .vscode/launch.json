@@ -19,7 +19,7 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "presentation": {
-        "group": "1. Jest",
+        "group": "01. Jest",
         "order": 1
       }
     },
@@ -36,7 +36,7 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "presentation": {
-        "group": "1. Jest",
+        "group": "01. Jest",
         "order": 2
       }
     },
@@ -54,9 +54,8 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
-      "sourceMaps": true,
       "presentation": {
-        "group": "2. Vitest",
+        "group": "02. Vitest",
         "order": 1
       }
     },
@@ -71,7 +70,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "2. Vitest",
+        "group": "02. Vitest",
         "order": 2
       }
     },
@@ -85,9 +84,8 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
-      "sourceMaps": true,
       "presentation": {
-        "group": "2. Vitest",
+        "group": "02. Vitest",
         "order": 3
       }
     },
@@ -101,26 +99,34 @@
       "name": "Vite React - Launch",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}/packages/vite-react-demo",
-      "sourceMaps": true,
       "preLaunchTask": "vite-react: dev",
+      "serverReadyAction": {
+        "pattern": "Local:.*",
+        "action": "openExternally"
+      },
       "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+      "postDebugTask": "kill-vite-react-dev",
       "presentation": {
-        "group": "3. Vite React",
+        "group": "03. Vite React",
         "order": 1
       }
     },
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Vite React - Launch (保存登录状态)",
+      "name": "Vite React - Launch (自定义用户信息)",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}/packages/vite-react-demo",
-      "sourceMaps": true,
       "preLaunchTask": "vite-react: dev",
+      "serverReadyAction": {
+        "pattern": "Local:.*",
+        "action": "openExternally"
+      },
       "userDataDir": "${workspaceFolder}/packages/vite-react-demo/.chrome-data",
       "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+      "postDebugTask": "kill-vite-react-dev",
       "presentation": {
-        "group": "3. Vite React",
+        "group": "03. Vite React",
         "order": 2
       }
     },
@@ -130,9 +136,8 @@
       "name": "Vite React - Attach",
       "port": 9222,
       "webRoot": "${workspaceFolder}/packages/vite-react-demo",
-      "sourceMaps": true,
       "presentation": {
-        "group": "3. Vite React",
+        "group": "03. Vite React",
         "order": 3
       }
     },
@@ -156,7 +161,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "4. Next.js",
+        "group": "04. Next.js",
         "order": 1
       }
     },
@@ -171,7 +176,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "4. Next.js",
+        "group": "04. Next.js",
         "order": 2
       }
     },
@@ -181,9 +186,8 @@
       "name": "Next.js - Attach Client",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/packages/nextjs-demo",
-      "sourceMaps": true,
       "presentation": {
-        "group": "4. Next.js",
+        "group": "04. Next.js",
         "order": 3
       }
     },
@@ -207,7 +211,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "5. Webpack",
+        "group": "05. Webpack",
         "order": 1
       }
     },
@@ -228,7 +232,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "5. Webpack",
+        "group": "05. Webpack",
         "order": 2
       }
     },
@@ -250,7 +254,7 @@
         "TS_NODE_PROJECT": "${workspaceFolder}/packages/typescript-demo/tsconfig.json"
       },
       "presentation": {
-        "group": "6. TypeScript",
+        "group": "06. TypeScript",
         "order": 1
       }
     },
@@ -265,7 +269,7 @@
       "internalConsoleOptions": "neverOpen",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "6. TypeScript",
+        "group": "06. TypeScript",
         "order": 2
       }
     },
@@ -285,10 +289,9 @@
         "NODE_ENV": "development",
         "PORT": "3000"
       },
-      "sourceMaps": true,
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "7. Node.js",
+        "group": "07. Node.js",
         "order": 1
       }
     },
@@ -300,7 +303,7 @@
       "restart": true,
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "7. Node.js",
+        "group": "07. Node.js",
         "order": 2
       }
     },
@@ -316,7 +319,7 @@
       "cwd": "${fileDirname}/..",
       "console": "integratedTerminal",
       "presentation": {
-        "group": "8. NPM Scripts",
+        "group": "08. NPM Scripts",
         "order": 1
       }
     },
@@ -330,7 +333,7 @@
       "console": "integratedTerminal",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "8. NPM Scripts",
+        "group": "08. NPM Scripts",
         "order": 2
       }
     },
@@ -343,7 +346,7 @@
       "cwd": "${workspaceFolder}/packages/npm-script-demo",
       "console": "integratedTerminal",
       "presentation": {
-        "group": "8. NPM Scripts",
+        "group": "08. NPM Scripts",
         "order": 3
       }
     },
@@ -356,7 +359,7 @@
       "cwd": "${workspaceFolder}/packages/npm-script-demo",
       "console": "integratedTerminal",
       "presentation": {
-        "group": "8. NPM Scripts",
+        "group": "08. NPM Scripts",
         "order": 4
       }
     },
@@ -378,7 +381,7 @@
         "SLOWMO": "100"
       },
       "presentation": {
-        "group": "9. Puppeteer",
+        "group": "09. Puppeteer",
         "order": 1
       }
     },
@@ -396,7 +399,7 @@
         "DEVTOOLS": "true"
       },
       "presentation": {
-        "group": "9. Puppeteer",
+        "group": "09. Puppeteer",
         "order": 2
       }
     },
@@ -411,14 +414,14 @@
         "HEADLESS": "true"
       },
       "presentation": {
-        "group": "9. Puppeteer",
+        "group": "09. Puppeteer",
         "order": 3
       }
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Puppeteer - Test UI (保存登录状态)",
+      "name": "Puppeteer - Test UI (自定义用户信息)",
       "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/test-ui.js",
       "cwd": "${workspaceFolder}/packages/puppeteer-demo",
       "console": "integratedTerminal",
@@ -428,7 +431,7 @@
         "SLOWMO": "50"
       },
       "presentation": {
-        "group": "9. Puppeteer",
+        "group": "09. Puppeteer",
         "order": 4
       }
     },
@@ -443,7 +446,7 @@
         "HEADLESS": "true"
       },
       "presentation": {
-        "group": "9. Puppeteer",
+        "group": "09. Puppeteer",
         "order": 5
       }
     },

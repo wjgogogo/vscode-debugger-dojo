@@ -23,6 +23,17 @@
           "endsPattern": "ready in"
         }
       }
+    },
+    {
+      "label": "kill-vite-react-dev",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "lsof -ti:5173 | xargs kill -9 2>/dev/null || true"],
+      "isBackground": false,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
     }
   ]
 }
