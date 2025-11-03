@@ -220,13 +220,8 @@
       "type": "node",
       "request": "launch",
       "name": "Webpack - Build",
-      "program": "${workspaceFolder}/node_modules/.bin/webpack",
-      "args": [
-        "--config",
-        "${workspaceFolder}/packages/webpack-demo/webpack/webpack.config.js",
-        "--mode",
-        "development"
-      ],
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "build:dev"],
       "cwd": "${workspaceFolder}/packages/webpack-demo",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
@@ -237,21 +232,18 @@
       }
     },
     {
-      "type": "node",
+      "type": "chrome",
       "request": "launch",
-      "name": "Webpack - Dev Server",
-      "program": "${workspaceFolder}/node_modules/.bin/webpack",
-      "args": [
-        "serve",
-        "--config",
-        "${workspaceFolder}/packages/webpack-demo/webpack/webpack.config.js",
-        "--mode",
-        "development"
-      ],
-      "cwd": "${workspaceFolder}/packages/webpack-demo",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"],
+      "name": "Webpack - Launch Chrome",
+      "url": "http://localhost:9000",
+      "webRoot": "${workspaceFolder}/packages/webpack-demo",
+      "preLaunchTask": "webpack: serve",
+      "serverReadyAction": {
+        "pattern": "webpack.*compiled",
+        "action": "openExternally"
+      },
+      "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+      "postDebugTask": "kill-webpack-serve",
       "presentation": {
         "group": "05. Webpack",
         "order": 2

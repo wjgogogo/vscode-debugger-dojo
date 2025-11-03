@@ -3,16 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack/webpack.config.js",
-    "build:dev": "webpack --config webpack/webpack.config.js --mode development",
-    "build:prod": "webpack --config webpack/webpack.config.js --mode production",
-    "watch": "webpack --config webpack/webpack.config.js --watch",
-    "serve": "webpack serve --config webpack/webpack.config.js"
+    "build:dev": "webpack --config webpack.config.js --mode development",
+    "serve": "webpack serve --config webpack.config.js"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/webpack": "^5.28.5",
+    "@types/webpack-env": "^1.18.0",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.4",
     "style-loader": "^3.3.3",

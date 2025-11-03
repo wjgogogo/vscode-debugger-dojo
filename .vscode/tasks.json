@@ -34,6 +34,29 @@
       "presentation": {
         "reveal": "silent"
       }
+    },
+    {
+      "label": "webpack: serve",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["--filter", "webpack-demo", "serve"],
+      "isBackground": true,
+      "problemMatcher": {
+        "base": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "webpack.*compiling",
+          "endsPattern": "webpack.*compiled"
+        }
+      }
+    },
+    {
+      "label": "kill-webpack-serve",
+      "type": "shell",
+      "command": "lsof -ti:9000 | xargs kill -9 2>/dev/null || true",
+      "presentation": {
+        "reveal": "never"
+      }
     }
   ]
 }
