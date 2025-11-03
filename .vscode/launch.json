@@ -152,9 +152,10 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["next", "dev"],
       "serverReadyAction": {
-        "pattern": "started server on .+, url: (https?://.+)",
+        "pattern": "Local:\\s+(https?://.+)",
+        "action": "debugWithChrome",
         "uriFormat": "%s",
-        "action": "debugWithChrome"
+        "webRoot": "${workspaceFolder}/packages/nextjs-demo"
       },
       "cwd": "${workspaceFolder}/packages/nextjs-demo",
       "console": "integratedTerminal",
@@ -182,13 +183,33 @@
     },
     {
       "type": "chrome",
-      "request": "attach",
-      "name": "Next.js - Attach Client",
+      "request": "launch",
+      "name": "Next.js - Client Launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/packages/nextjs-demo",
       "presentation": {
         "group": "04. Next.js",
-        "order": 3
+        "order": 4
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Next.js - Server with startDebugging",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["next", "dev"],
+      "serverReadyAction": {
+        "pattern": "Local:\\s+(https?://.+)",
+        "action": "startDebugging",
+        "name": "Next.js - Client Launch"
+      },
+      "cwd": "${workspaceFolder}/packages/nextjs-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "04. Next.js",
+        "order": 5
       }
     },
 
@@ -507,6 +528,17 @@
         "group": "10. Rust",
         "order": 3
       }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Next.js - Full Stack (Compound)",
+      "configurations": ["Next.js - Server", "Next.js - Client Launch"],
+      "presentation": {
+        "group": "04. Next.js",
+        "order": 6
+      },
+      "stopAll": true
     }
   ]
 }
