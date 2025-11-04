@@ -288,35 +288,41 @@
     },
 
     // ========================================
-    // 📦 node-demo
+    // 📦 express-demo
     // ========================================
     {
       "type": "node",
       "request": "launch",
-      "name": "Node.js - Launch",
-      "program": "${workspaceFolder}/packages/node-demo/src/index.ts",
+      "name": "Express - Launch",
+      "program": "${workspaceFolder}/packages/express-demo/src/index.ts",
       "runtimeArgs": ["-r", "tsx/cjs"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/packages/express-demo",
       "env": {
         "NODE_ENV": "development",
         "PORT": "3000"
       },
       "skipFiles": ["<node_internals>/**"],
+      "serverReadyAction": {
+        "pattern": "(http://localhost:\\d+)",
+        "uriFormat": "%s",
+        "action": "openExternally"
+      },
       "presentation": {
-        "group": "07. Node.js",
+        "group": "07. Express",
         "order": 1
       }
     },
     {
       "type": "node",
       "request": "attach",
-      "name": "Node.js - Attach",
+      "name": "Express - Attach",
       "port": 9229,
       "restart": true,
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
-        "group": "07. Node.js",
+        "group": "07. Express",
         "order": 2
       }
     },

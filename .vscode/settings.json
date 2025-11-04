@@ -1,11 +1,11 @@
 {
   // 调试设置
-  "debug.javascript.autoAttachFilter": "smart",
+  "debug.javascript.autoAttachFilter": "disabled",
   "debug.javascript.codelens.npmScripts": "top",
 
   // Jest 设置
-  "jest.runMode":"on-demand",
+  "jest.runMode": "on-demand",
 
   // Rust 设置
-  "rust-analyzer.check.command": "clippy", 
+  "rust-analyzer.check.command": "clippy"
 }
