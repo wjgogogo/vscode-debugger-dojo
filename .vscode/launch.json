@@ -333,53 +333,26 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "npm script - Run Script File",
-      "program": "${file}",
-      "cwd": "${fileDirname}/..",
+      "name": "npm script - Start",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "start"],
+      "cwd": "${workspaceFolder}/packages/npm-script-demo",
       "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
       "presentation": {
         "group": "08. NPM Scripts",
         "order": 1
       }
     },
     {
-      "type": "node",
+      "type": "node-terminal",
+      "name": "npm script - Start (Terminal)",
       "request": "launch",
-      "name": "npm script - Build",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "build"],
+      "command": "npm start",
       "cwd": "${workspaceFolder}/packages/npm-script-demo",
-      "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"],
       "presentation": {
         "group": "08. NPM Scripts",
         "order": 2
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "npm script - Build Production",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "build:prod"],
-      "cwd": "${workspaceFolder}/packages/npm-script-demo",
-      "console": "integratedTerminal",
-      "presentation": {
-        "group": "08. NPM Scripts",
-        "order": 3
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "npm script - Deploy",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "deploy"],
-      "cwd": "${workspaceFolder}/packages/npm-script-demo",
-      "console": "integratedTerminal",
-      "presentation": {
-        "group": "08. NPM Scripts",
-        "order": 4
       }
     },
 
