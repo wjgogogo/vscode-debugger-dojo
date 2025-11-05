@@ -362,84 +362,33 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Puppeteer - Current File",
-      "program": "${file}",
+      "name": "Puppeteer - Auto Fill Form",
+      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/auto-fill-form.js",
       "cwd": "${workspaceFolder}/packages/puppeteer-demo",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "env": {
-        "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
-        "HEADLESS": "false",
-        "SLOWMO": "100"
+        "HEADLESS": "false"
       },
+      "preLaunchTask": "puppeteer-demo: start-server",
+      "postDebugTask": "kill-puppeteer-demo-dev",
       "presentation": {
         "group": "09. Puppeteer",
         "order": 1
       }
     },
     {
-      "type": "node",
-      "request": "launch",
-      "name": "Puppeteer - Scrape (有头模式 + user-data-dir)",
-      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/scrape.js",
-      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
-      "console": "integratedTerminal",
-      "env": {
-        "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
-        "HEADLESS": "false",
-        "SLOWMO": "100",
-        "DEVTOOLS": "true"
-      },
+      "type": "chrome",
+      "request": "attach",
+      "name": "Puppeteer - Chrome Attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/packages/puppeteer-demo",
+      "urlFilter": "http://localhost:5173/*",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
       "presentation": {
         "group": "09. Puppeteer",
         "order": 2
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Puppeteer - Scrape (无头模式)",
-      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/scrape.js",
-      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
-      "console": "integratedTerminal",
-      "env": {
-        "HEADLESS": "true"
-      },
-      "presentation": {
-        "group": "09. Puppeteer",
-        "order": 3
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Puppeteer - Test UI (自定义用户信息)",
-      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/test-ui.js",
-      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
-      "console": "integratedTerminal",
-      "env": {
-        "USER_DATA_DIR": "${workspaceFolder}/packages/puppeteer-demo/user-data",
-        "HEADLESS": "false",
-        "SLOWMO": "50"
-      },
-      "presentation": {
-        "group": "09. Puppeteer",
-        "order": 4
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Puppeteer - Screenshot (快速模式)",
-      "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/screenshot.js",
-      "cwd": "${workspaceFolder}/packages/puppeteer-demo",
-      "console": "integratedTerminal",
-      "env": {
-        "HEADLESS": "true"
-      },
-      "presentation": {
-        "group": "09. Puppeteer",
-        "order": 5
       }
     },
 
@@ -508,6 +457,18 @@
       "presentation": {
         "group": "04. Next.js",
         "order": 6
+      },
+      "stopAll": true
+    },
+    {
+      "name": "Puppeteer - Full Stack",
+      "configurations": [
+        "Puppeteer - Auto Fill Form",
+        "Puppeteer - Chrome Attach"
+      ],
+      "presentation": {
+        "group": "09. Puppeteer",
+        "order": 3
       },
       "stopAll": true
     }

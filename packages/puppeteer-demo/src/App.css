@@ -1,0 +1,71 @@
+.app-container {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  max-width: 1400px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+  flex: 1;
+  min-width: 400px;
+}
+
+.form-section h1 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.result-section {
+  flex: 1;
+  min-width: 400px;
+  border-left: 1px solid #eee;
+  padding-left: 40px;
+}
+
+.result-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.result-content {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.result-content pre {
+  margin: 0;
+  font-size: 12px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  color: #333;
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .app-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .result-section {
+    border-left: none;
+    border-top: 1px solid #eee;
+    padding-left: 0;
+    padding-top: 40px;
+  }
+}

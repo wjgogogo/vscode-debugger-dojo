@@ -57,6 +57,40 @@
       "presentation": {
         "reveal": "never"
       }
+    },
+    {
+      "label": "puppeteer-demo: start-server",
+      "type": "npm",
+      "script": "dev",
+      "path": "packages/puppeteer-demo",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "^([^\\s].*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "Local:.*"
+        }
+      }
+    },
+    {
+      "label": "kill-puppeteer-demo-dev",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "lsof -ti:5173 | xargs kill -9 2>/dev/null || true"],
+      "isBackground": false,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
     }
   ]
 }
