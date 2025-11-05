@@ -1,14 +1,10 @@
 [package]
 name = "rust-demo"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 
 [[bin]]
 name = "hello"
 path = "src/bin/hello.rs"
-
-[[bin]]
-name = "calculator"
-path = "src/bin/calculator.rs"

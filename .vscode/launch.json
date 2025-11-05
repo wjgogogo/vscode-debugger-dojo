@@ -400,7 +400,12 @@
       "request": "launch",
       "name": "Rust - Debug hello",
       "cargo": {
-        "args": ["build", "--bin=hello", "--package=rust-demo"],
+        "args": [
+          "build",
+          "--bin=hello",
+          "--package=rust-demo",
+          "--manifest-path=${workspaceFolder}/packages/rust-demo/Cargo.toml"
+        ],
         "filter": {
           "name": "hello",
           "kind": "bin"
@@ -408,6 +413,7 @@
       },
       "args": [],
       "cwd": "${workspaceFolder}/packages/rust-demo",
+      "sourceLanguages": ["rust"],
       "presentation": {
         "group": "10. Rust",
         "order": 1
@@ -416,16 +422,22 @@
     {
       "type": "lldb",
       "request": "launch",
-      "name": "Rust - Debug calculator",
+      "name": "Rust - Debug All Tests",
       "cargo": {
-        "args": ["build", "--bin=calculator", "--package=rust-demo"],
-        "filter": {
-          "name": "calculator",
-          "kind": "bin"
-        }
+        "args": [
+          "test",
+          "--no-run",
+          "--lib",
+          "--package=rust-demo",
+          "--manifest-path=${workspaceFolder}/packages/rust-demo/Cargo.toml"
+        ]
       },
-      "args": [],
+      "args": ["--nocapture", "--test-threads=1"],
       "cwd": "${workspaceFolder}/packages/rust-demo",
+      "sourceLanguages": ["rust"],
+      "env": {
+        "RUST_BACKTRACE": "short"
+      },
       "presentation": {
         "group": "10. Rust",
         "order": 2
@@ -434,20 +446,34 @@
     {
       "type": "lldb",
       "request": "launch",
-      "name": "Rust - Debug Tests",
+      "name": "Rust - Debug Specific Test",
       "cargo": {
-        "args": ["test", "--no-run", "--package=rust-demo"],
-        "filter": {
-          "name": "rust-demo",
-          "kind": "lib"
-        }
+        "args": [
+          "test",
+          "--no-run",
+          "--lib",
+          "--package=rust-demo",
+          "--manifest-path=${workspaceFolder}/packages/rust-demo/Cargo.toml"
+        ]
       },
-      "args": [],
+      "args": ["${input:rustTestName}", "--nocapture", "--test-threads=1"],
       "cwd": "${workspaceFolder}/packages/rust-demo",
+      "sourceLanguages": ["rust"],
+      "env": {
+        "RUST_BACKTRACE": "short"
+      },
       "presentation": {
         "group": "10. Rust",
         "order": 3
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "rustTestName",
+      "type": "promptString",
+      "description": "输入要调试的测试函数名",
+      "default": ""
     }
   ],
   "compounds": [
