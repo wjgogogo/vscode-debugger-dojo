@@ -4,9 +4,7 @@
   "private": true,
   "scripts": {
     "dev:ts-node": "ts-node src/index.ts",
-    "dev:tsx": "tsx src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev:tsx": "tsx src/index.ts"
   },
   "dependencies": {},
   "devDependencies": {
