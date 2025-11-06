@@ -4,11 +4,13 @@
 
 ## 目录
 
-- [快捷调试配置](#快捷调试配置)
-- [Vite + React 调试配置](#vite--react-调试配置)
-- [Node.js 调试配置](#nodejs-调试配置)
 - [Jest 调试配置](#jest-调试配置)
 - [Vitest 调试配置](#vitest-调试配置)
+- [Vite + React 调试配置](#vite--react-调试配置)
+- [Next.js 调试配置](#nextjs-调试配置)
+- [Webpack 调试配置](#webpack-调试配置)
+- [TypeScript 调试配置](#typescript-调试配置)
+- [Express 调试配置](#express-调试配置)
 - [npm script 调试配置](#npm-script-调试配置)
 - [Puppeteer 调试配置](#puppeteer-调试配置)
 - [Rust 调试配置](#rust-调试配置)
@@ -17,29 +19,31 @@
 
 ---
 
-## 快捷调试配置
+## Jest 调试配置
 
-### 🚀 Debug Current File - Jest
+### Jest - Current File
 
-**用途**: 快速调试当前打开的 Jest 测试文件，按 F5 即可启动。
+**用途**: 调试当前打开的 Jest 测试文件。
 
 ```json
 {
   "type": "node",
   "request": "launch",
-  "name": "🚀 Debug Current File - Jest",
-  "program": "${workspaceFolder}/node_modules/.bin/jest",
+  "name": "Jest - Current File",
+  "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
   "args": [
-    "${file}",
+    "${relativeFile}",
+    "--config=${workspaceFolder}/packages/jest-demo/jest.config.js",
     "--runInBand",
-    "--no-coverage",
-    "--testTimeout=30000"
+    "--no-coverage"
   ],
+  "cwd": "${workspaceFolder}/packages/jest-demo",
   "console": "integratedTerminal",
   "internalConsoleOptions": "neverOpen",
-  "cwd": "${workspaceFolder}",
-  "skipFiles": ["<node_internals>/**"],
-  "outputCapture": "std"
+  "presentation": {
+    "group": "01. Jest",
+    "order": 1
+  }
 }
 ```
 
@@ -47,75 +51,49 @@
 
 | 参数 | 说明 |
 |------|------|
-| `type: "node"` | 使用 Node.js 调试器 |
-| `request: "launch"` | 启动新的调试会话（而不是附加到现有进程） |
-| `name` | 调试配置显示名称，🚀 emoji 表示常用配置 |
-| `program` | Jest CLI 的路径，通过 node_modules/.bin/jest 调用 |
+| `program` | Jest CLI 的绝对路径 |
 | `args` | 传递给 Jest 的参数数组 |
-| `${file}` | VSCode 变量，表示当前打开的文件路径 |
-| `--runInBand` | 串行运行测试（不使用多进程），调试必需 |
-| `--no-coverage` | 禁用代码覆盖率收集，加快调试速度 |
-| `--testTimeout=30000` | 测试超时时间 30 秒，防止调试时超时 |
-| `console: "integratedTerminal"` | 在 VSCode 集成终端中显示输出 |
-| `internalConsoleOptions: "neverOpen"` | 不自动打开调试控制台 |
-| `cwd` | 工作目录，设置为工作区根目录 |
-| `skipFiles` | 跳过 Node.js 内部文件，避免调试进入 node_modules |
-| `outputCapture: "std"` | 捕获标准输出到调试控制台 |
+| `${relativeFile}` | 相对于 `cwd` 的文件路径 |
+| `--config` | 指定 Jest 配置文件的完整路径 |
+| `--runInBand` | 串行运行测试（调试必需） |
+| `--no-coverage` | 禁用代码覆盖率收集，加快调试 |
+| `cwd` | 工作目录，影响相对路径的解析 |
+| `presentation.group` | 调试配置分组名称 |
+| `presentation.order` | 同组配置中的显示顺序 |
 
 **使用场景**:
 - 打开任意 `.test.ts` 或 `.test.js` 文件
-- 按 F5 快速启动调试
-- 只运行当前文件的测试，不影响其他测试
-
-**注意事项**:
-- 需要确保文件路径符合 Jest 配置的 testMatch 模式
-- 使用 `--runInBand` 会比较慢，但调试必需
+- 快速调试单个测试文件
 
 ---
 
-### 🚀 Debug Current File - Vitest
+### Jest - All Tests
 
-**用途**: 快速调试当前打开的 Vitest 测试文件。
+**用途**: 调试所有 Jest 测试。
 
 ```json
 {
   "type": "node",
   "request": "launch",
-  "name": "🚀 Debug Current File - Vitest",
-  "runtimeExecutable": "pnpm",
-  "runtimeArgs": [
-    "exec",
-    "vitest",
-    "run",
-    "${file}"
+  "name": "Jest - All Tests",
+  "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
+  "args": [
+    "--runInBand",
+    "--config=${workspaceFolder}/packages/jest-demo/jest.config.js"
   ],
+  "cwd": "${workspaceFolder}/packages/jest-demo",
   "console": "integratedTerminal",
   "internalConsoleOptions": "neverOpen",
-  "cwd": "${workspaceFolder}",
-  "skipFiles": ["<node_internals>/**"]
+  "presentation": {
+    "group": "01. Jest",
+    "order": 2
+  }
 }
 ```
 
-**参数说明**:
-
-| 参数 | 说明 |
-|------|------|
-| `runtimeExecutable: "pnpm"` | 使用 pnpm 作为运行时可执行文件 |
-| `runtimeArgs` | 传递给 pnpm 的参数数组 |
-| `exec` | pnpm exec 命令，执行本地安装的包 |
-| `vitest` | 要执行的命令 |
-| `run` | Vitest 运行模式（非 watch 模式） |
-| `${file}` | 当前文件路径 |
-
 **使用场景**:
-- Vitest 测试文件调试
-- 使用 pnpm workspace 的项目
-- 需要快速调试单个测试文件
-
-**与 Jest 配置的区别**:
-- 使用 `runtimeExecutable` 而不是 `program`
-- 通过 pnpm exec 调用 vitest
-- 不需要 `--runInBand` 参数
+- 调试整个测试套件
+- 排查测试之间的相互影响
 
 ---
 
@@ -132,11 +110,13 @@
   "name": "Vite React - Launch",
   "url": "http://localhost:5173",
   "webRoot": "${workspaceFolder}/packages/vite-react-demo",
-  "sourceMaps": true,
   "preLaunchTask": "vite-react: dev",
-  "runtimeArgs": [
-    "--auto-open-devtools-for-tabs"
-  ]
+  "serverReadyAction": {
+    "pattern": "Local:.*",
+    "action": "openExternally"
+  },
+  "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+  "postDebugTask": "kill-vite-react-dev"
 }
 ```
 
@@ -172,7 +152,7 @@
 
 ---
 
-### Vite React - Launch (保存登录状态)
+### Vite React - Launch (自定义用户信息)
 
 **用途**: 启动 Chrome 调试时保存登录状态、Cookies 和浏览器扩展。
 
@@ -180,15 +160,17 @@
 {
   "type": "chrome",
   "request": "launch",
-  "name": "Vite React - Launch (保存登录状态)",
+  "name": "Vite React - Launch (自定义用户信息)",
   "url": "http://localhost:5173",
   "webRoot": "${workspaceFolder}/packages/vite-react-demo",
-  "sourceMaps": true,
   "preLaunchTask": "vite-react: dev",
+  "serverReadyAction": {
+    "pattern": "Local:.*",
+    "action": "openExternally"
+  },
   "userDataDir": "${workspaceFolder}/packages/vite-react-demo/.chrome-data",
-  "runtimeArgs": [
-    "--auto-open-devtools-for-tabs"
-  ]
+  "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+  "postDebugTask": "kill-vite-react-dev"
 }
 ```
 
@@ -280,27 +262,122 @@ google-chrome --remote-debugging-port=9222
 
 ---
 
-## Node.js 调试配置
+## Vitest 调试配置
 
-### Node.js - Launch
+### Vitest - Current File
 
-**用途**: 调试 Node.js 应用（支持 TypeScript）。
+**用途**: 调试当前打开的 Vitest 测试文件。
 
 ```json
 {
   "type": "node",
   "request": "launch",
-  "name": "Node.js - Launch",
-  "program": "${workspaceFolder}/packages/node-demo/src/index.ts",
+  "name": "Vitest - Current File",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["vitest", "run", "${file}"],
+  "cwd": "${workspaceFolder}/packages/vitest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"],
+  "presentation": {
+    "group": "02. Vitest",
+    "order": 1
+  }
+}
+```
+
+**参数说明**:
+- `runtimeExecutable: "pnpm"`: 使用 pnpm 作为运行时
+- `runtimeArgs`: pnpm 的参数
+  - `vitest`: vitest 命令
+  - `run`: 单次运行模式
+  - `${file}`: 当前文件路径
+- Vitest 会自动检测调试器并禁用并行执行
+
+---
+
+### Vitest - All Tests
+
+**用途**: 调试所有 Vitest 测试。
+
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Vitest - All Tests",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["vitest", "run"],
+  "cwd": "${workspaceFolder}/packages/vitest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"],
+  "presentation": {
+    "group": "02. Vitest",
+    "order": 2
+  }
+}
+```
+
+---
+
+### Vitest - Watch Mode
+
+**用途**: Vitest 监视模式，文件变化时自动重新运行测试。
+
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Vitest - Watch Mode",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["vitest"],
+  "cwd": "${workspaceFolder}/packages/vitest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"],
+  "presentation": {
+    "group": "02. Vitest",
+    "order": 3
+  }
+}
+```
+
+**参数说明**:
+- `pnpm vitest`: 默认启动 watch 模式
+- 适合持续开发和调试
+
+---
+
+## Express 调试配置
+
+### Express - Launch
+
+**用途**: 启动并调试 Express 服务器。
+
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Express - Launch",
+  "program": "${workspaceFolder}/packages/express-demo/src/index.ts",
   "runtimeArgs": ["-r", "tsx/cjs"],
   "console": "integratedTerminal",
   "internalConsoleOptions": "neverOpen",
+  "cwd": "${workspaceFolder}/packages/express-demo",
   "env": {
     "NODE_ENV": "development",
     "PORT": "3000"
   },
-  "sourceMaps": true,
-  "skipFiles": ["<node_internals>/**"]
+  "skipFiles": ["<node_internals>/**"],
+  "serverReadyAction": {
+    "pattern": "(http://localhost:\\d+)",
+    "uriFormat": "%s",
+    "action": "openExternally"
+  },
+  "presentation": {
+    "group": "07. Express",
+    "order": 1
+  }
 }
 ```
 
@@ -308,21 +385,55 @@ google-chrome --remote-debugging-port=9222
 
 | 参数 | 说明 |
 |------|------|
-| `program` | 要调试的入口文件 |
+| `program` | 要调试的入口文件（TypeScript） |
 | `runtimeArgs` | Node.js 启动参数 |
-| `-r tsx/cjs` | 使用 tsx 加载器支持 TypeScript（无需编译） |
+| `-r tsx/cjs` | 使用 tsx 加载器支持 TypeScript（推荐，速度快） |
 | `env` | 环境变量对象 |
-| `NODE_ENV` | Node.js 环境模式 |
+| `NODE_ENV` | Node.js 环境模式（development/production） |
 | `PORT` | 应用端口号 |
-| `sourceMaps: true` | 启用 Source Map 支持 |
+| `serverReadyAction` | 检测服务器启动后自动打开浏览器 |
 
 **TypeScript 支持方案对比**:
 
 | 方案 | 优点 | 缺点 |
 |------|------|------|
-| `-r tsx/cjs` | 无需编译，直接运行 | 需要安装 tsx |
-| `-r ts-node/register` | 传统方案 | 较慢，可能有类型问题 |
-| 预编译 | 运行速度快 | 需要编译步骤，调试麻烦 |
+| `-r tsx/cjs` | 无需编译，极快 | 无完整类型检查 |
+| `-r ts-node/register` | 完整类型检查 | 较慢 |
+| 预编译 | 运行速度快 | 需要编译步骤 |
+
+---
+
+### Express - Attach
+
+**用途**: 附加到已运行的 Express 进程（通常配合 nodemon 使用）。
+
+```json
+{
+  "type": "node",
+  "request": "attach",
+  "name": "Express - Attach",
+  "port": 9229,
+  "restart": true,
+  "skipFiles": ["<node_internals>/**"],
+  "presentation": {
+    "group": "07. Express",
+    "order": 2
+  }
+}
+```
+
+**参数说明**:
+
+| 参数                | 说明                         |
+| ------------------- | ---------------------------- |
+| `request: "attach"` | 附加到已运行的进程           |
+| `port: 9229`        | Node.js 调试协议默认端口     |
+| `restart: true`     | 进程重启时自动重新附加调试器 |
+
+**使用步骤**:
+1. 在 package.json 中配置脚本：`"start:inspect": "nodemon --inspect src/index.ts"`
+2. 终端运行：`pnpm start:inspect`
+3. VSCode 选择 "Express - Attach" 并按 F5
 
 **使用场景**:
 - Express/Koa 等 Web 框架调试

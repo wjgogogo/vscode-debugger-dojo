@@ -44,49 +44,54 @@ pnpm install
 
 ### 2. 选择你想要调试的场景
 
-在 VSCode 的调试面板（Ctrl/Cmd + Shift + D）中选择对应的调试配置：
+在 VSCode 的调试面板（Ctrl/Cmd + Shift + D）中选择对应的调试配置，然后按 F5 开始调试。
 
-#### 快捷调试（按 F5 直接调试当前文件）
-- **🚀 Debug Current File - Jest**: 调试当前打开的 Jest 测试文件
-- **🚀 Debug Current File - Vitest**: 调试当前打开的 Vitest 测试文件
-
-#### 前端调试
-- **Vite React - Launch**: 启动 Vite 开发服务器并调试
-- **Vite React - Launch (保存登录状态)**: 使用 userDataDir 保存登录状态
-- **Vite React - Attach**: 附加到已运行的 Vite 服务器
-- **Next.js - Full Stack**: 同时调试客户端和服务端
-- **Next.js - Server**: 仅调试服务端（API Routes + Server Components）
-- **Next.js - Attach Client**: 附加到已运行的 Next.js 客户端
-
-#### 后端调试
-- **Node.js - Launch**: 启动并调试 Node.js/Express 应用
-- **Node.js - Attach**: 附加到已运行的 Node.js 进程
-
-#### 构建工具调试
-- **Webpack - Build**: 调试 Webpack 配置和构建过程
-- **Webpack - Dev Server**: 调试 Webpack Dev Server 和热更新
-- **npm script - Build/Deploy**: 调试 npm 脚本
-
-#### TypeScript 调试
-- **TypeScript - Current File (tsx)**: 使用 tsx 调试当前 TS 文件（推荐，更快）
-- **TypeScript - Current File (ts-node)**: 使用 ts-node 调试当前 TS 文件
-
-#### 测试调试
-- **Jest - Current File**: 调试当前 Jest 测试文件
+#### 📦 Jest 调试
+- **Jest - Current File**: 调试当前打开的 Jest 测试文件
 - **Jest - All Tests**: 调试所有 Jest 测试
+
+#### 📦 Vitest 调试
 - **Vitest - Current File**: 调试当前 Vitest 测试文件
 - **Vitest - All Tests**: 调试所有 Vitest 测试
+- **Vitest - Watch Mode**: Vitest 监视模式
 
-#### 自动化测试调试
-- **Puppeteer - Current File**: 调试当前 Puppeteer 脚本
-- **Puppeteer - Scrape (有头模式)**: 显示浏览器，保存登录状态
-- **Puppeteer - Scrape (无头模式)**: 快速执行，不显示浏览器
-- **Puppeteer - Test UI**: UI 自动化测试调试
-- **Puppeteer - Screenshot**: 批量截图调试
+#### 📦 Vite + React 调试
+- **Vite React - Launch**: 启动 Vite 开发服务器并调试前端代码
+- **Vite React - Launch (自定义用户信息)**: 使用 userDataDir 保存登录状态和浏览器数据
+- **Vite React - Attach**: 附加到已运行的 Chrome 实例（需提前启动 Chrome）
 
-#### Rust 调试
-- **Rust - Debug hello/calculator**: 调试 Rust 二进制程序
-- **Rust - Debug Tests**: 调试 Rust 测试
+#### 📦 Next.js 全栈调试
+- **Next.js - Full Stack**: 使用 debugWithChrome 模式，一键启动服务端和客户端调试
+- **Next.js - Server**: 仅调试服务端（API Routes、Server Components）
+- **Next.js - Client Launch**: 仅调试客户端（需手动启动服务器）
+- **Next.js - Server with startDebugging**: 服务端启动后自动启动客户端调试会话
+- **Next.js - Full Stack (Compound)**: 同时启动两个独立的调试会话
+
+#### 📦 Webpack 调试
+- **Webpack - Build**: 调试 Webpack 配置和构建过程
+- **Webpack - Launch Chrome**: 启动 Webpack Dev Server 并调试前端代码
+
+#### 📦 TypeScript 调试
+- **TypeScript - Current File (tsx)**: 使用 tsx 调试当前 TS 文件（推荐，启动快）
+- **TypeScript - Current File (ts-node)**: 使用 ts-node 调试当前 TS 文件（类型检查完整）
+
+#### 📦 Express 调试
+- **Express - Launch**: 启动 Express 服务器并调试
+- **Express - Attach**: 附加到已运行的 Express 进程
+
+#### 📦 npm scripts 调试
+- **npm script - Start**: 调试 npm script 脚本
+- **npm script - Start (Terminal)**: 在集成终端中运行 npm script
+
+#### 📦 Puppeteer 调试
+- **Puppeteer - Auto Fill Form**: 调试自动填表脚本，显示浏览器窗口
+- **Puppeteer - Chrome Attach**: 附加到 Puppeteer 启动的 Chrome 浏览器
+- **Puppeteer - Full Stack**: 同时调试 Node.js 脚本和浏览器代码
+
+#### 📦 Rust 调试
+- **Rust - Debug hello**: 调试 hello 二进制程序
+- **Rust - Debug All Tests**: 调试所有 Rust 测试
+- **Rust - Debug Specific Test**: 调试指定的 Rust 测试函数
 
 ### 3. 设置断点并开始调试
 
@@ -97,45 +102,47 @@ pnpm install
 ### 前端调试
 
 #### Vite + React 调试（vite-react-demo）
-- **Launch 模式**: 自动启动开发服务器并附加调试器
-- **Launch + userDataDir**: 保存 Cookies 和登录状态，支持 React DevTools
+- **Launch 模式**: 自动启动 Vite 开发服务器并附加调试器
+- **Launch (自定义用户信息)**: 使用 userDataDir 保存 Cookies、登录状态和 React DevTools 设置
 - **Attach 模式**: 手动启动服务器后附加调试器
 - 完整的 Source Map 支持，可以在 TypeScript/JSX 源码中直接调试
-- 支持热更新（HMR）调试
+- 支持热更新（HMR）调试，修改代码后自动更新
 
 详见：[vite-react-demo/README.md](./packages/vite-react-demo/README.md)
 
 #### Next.js 全栈调试（nextjs-demo）
-- **Full Stack 模式**: 同时调试客户端和服务端代码
+- **Full Stack（debugWithChrome）**: 一键启动，服务器启动后自动打开 Chrome 调试客户端和服务端
+- **Full Stack（startDebugging）**: 服务器启动后自动启动客户端调试配置，会话独立
+- **Full Stack（Compound）**: 手动启动两个独立调试会话，完全可控
 - **Server 模式**: 仅调试 API Routes 和 Server Components
-- **Attach Client**: 附加到已运行的客户端
-- 支持 App Router（Next.js 13+）
+- **Client Launch**: 仅调试客户端代码
+- 支持 App Router（Next.js 13+）和 Pages Router
 - 支持 Server Components 和 Client Components 混合调试
-- 支持 API Routes 调试
-- 支持 Middleware 调试
+- 支持 API Routes 和 Middleware 调试
 
 详见：[nextjs-demo/README.md](./packages/nextjs-demo/README.md)
 
 ### 后端调试
 
-#### Node.js / Express 调试（node-demo）
-- 支持 TypeScript（使用 tsx）
-- 支持环境变量配置
-- 支持 Attach 模式（配合 nodemon）
+#### Express 调试（express-demo）
+- **Launch 模式**: 自动启动 Express 服务器并调试，服务器就绪后自动打开浏览器
+- **Attach 模式**: 附加到已运行的 Express 进程，适合配合 nodemon 使用
+- 完整的 TypeScript 支持（使用 tsx）
+- 支持环境变量配置和 Source Map
 - Express 路由和中间件调试
 - 异步函数调试
 - 错误处理调试
 
-详见：[node-demo/README.md](./packages/node-demo/README.md)
+详见：[express-demo/README.md](./packages/express-demo/README.md)
 
 ### 构建工具调试
 
 #### Webpack 调试（webpack-demo）
-- 调试 webpack.config.js 配置逻辑
-- 调试自定义 Plugin（apply、hooks）
-- 调试自定义 Loader
+- **Build 模式**: 调试 webpack.config.js 配置逻辑和构建过程
+- **Launch Chrome 模式**: 启动 Webpack Dev Server 并调试前端代码
+- 调试自定义 Plugin（apply、hooks）和 Loader
 - 调试构建过程（compilation、chunks、assets）
-- 调试 Dev Server 和热更新
+- 调试热更新（HMR）和 Dev Server
 - Source Map 配置调试
 
 详见：[webpack-demo/README.md](./packages/webpack-demo/README.md)
@@ -176,8 +183,9 @@ pnpm install
 ### npm script 调试
 
 #### npm script 调试（npm-script-demo）
-- 调试 package.json 中的自定义脚本
-- 支持复杂的构建流程调试
+- **npm script - Start**: 通过 npm 调试 package.json 中的脚本
+- **npm script - Start (Terminal)**: 在集成终端中运行 npm script（node-terminal 类型）
+- 支持复杂的构建和部署流程调试
 - 支持多脚本链式调用调试
 - 支持 pre/post hooks 调试
 
@@ -186,24 +194,25 @@ pnpm install
 ### 浏览器自动化调试
 
 #### Puppeteer 调试（puppeteer-demo）
-- **有头模式 + userDataDir**: 显示浏览器，保存登录状态和 Cookies
-- **无头模式**: 快速执行，适合 CI/CD
-- slowMo 慢动作模式方便观察
-- 自动打开 DevTools
-- 支持网页爬虫调试
-- 支持 UI 自动化测试调试
-- 支持批量截图调试
+- **Auto Fill Form**: 自动填表脚本调试，显示浏览器（headless=false），带 preLaunchTask 和 postDebugTask
+- **Chrome Attach**: 附加到 Puppeteer 启动的 Chrome 浏览器，调试前端代码
+- **Full Stack（Compound）**: 同时启动 Puppeteer 脚本和 Chrome 调试器
+- 支持网页爬虫调试和 UI 自动化测试调试
+- 支持有头/无头模式，slowMo 慢动作模式方便观察
+- 支持批量截图和数据爬取调试
 
 详见：[puppeteer-demo/README.md](./packages/puppeteer-demo/README.md)
 
 ### 系统编程调试
 
 #### Rust 调试（rust-demo）
-- 使用 CodeLLDB 扩展
+- **Debug hello**: 调试指定的 Rust 二进制程序
+- **Debug All Tests**: 调试所有 Rust 单元测试和集成测试
+- **Debug Specific Test**: 调试指定的测试函数（需要输入测试函数名）
+- 使用 CodeLLDB 扩展和 LLDB 调试器
 - 支持断点、条件断点、日志断点
 - 支持变量查看、调用栈、监视表达式
-- 支持调试二进制程序（bin）
-- 支持调试单元测试和集成测试
+- 支持调试编译过程和标准库代码
 
 详见：[rust-demo/README.md](./packages/rust-demo/README.md)
 

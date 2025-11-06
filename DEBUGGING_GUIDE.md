@@ -146,14 +146,40 @@ VSCode 支持多种调试器：
 
 ### Vite + React
 
-**Launch 模式：**
+**Launch 模式（标准）：**
 ```json
 {
   "type": "chrome",
   "request": "launch",
+  "name": "Vite React - Launch",
   "url": "http://localhost:5173",
-  "webRoot": "${workspaceFolder}",
-  "preLaunchTask": "npm: dev"
+  "webRoot": "${workspaceFolder}/packages/vite-react-demo",
+  "preLaunchTask": "vite-react: dev",
+  "serverReadyAction": {
+    "pattern": "Local:.*",
+    "action": "openExternally"
+  },
+  "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+  "postDebugTask": "kill-vite-react-dev"
+}
+```
+
+**Launch 模式（保存登录状态）：**
+```json
+{
+  "type": "chrome",
+  "request": "launch",
+  "name": "Vite React - Launch (自定义用户信息)",
+  "url": "http://localhost:5173",
+  "webRoot": "${workspaceFolder}/packages/vite-react-demo",
+  "preLaunchTask": "vite-react: dev",
+  "userDataDir": "${workspaceFolder}/packages/vite-react-demo/.chrome-data",
+  "serverReadyAction": {
+    "pattern": "Local:.*",
+    "action": "openExternally"
+  },
+  "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+  "postDebugTask": "kill-vite-react-dev"
 }
 ```
 
@@ -162,33 +188,66 @@ VSCode 支持多种调试器：
 {
   "type": "chrome",
   "request": "attach",
+  "name": "Vite React - Attach",
   "port": 9222,
-  "webRoot": "${workspaceFolder}"
+  "webRoot": "${workspaceFolder}/packages/vite-react-demo"
 }
 ```
 
-### Node.js + Express
+**关键参数说明：**
+- `preLaunchTask`: 启动调试前执行的任务（通常启动开发服务器）
+- `postDebugTask`: 调试结束后执行的任务（通常清理进程）
+- `serverReadyAction`: 检测服务器就绪后自动打开浏览器
+- `userDataDir`: 保存 Chrome 用户数据（Cookies、扩展、设置等）
+- `--auto-open-devtools-for-tabs`: 自动打开 DevTools
 
-**基础配置：**
+### Express
+
+**Launch 模式（推荐）：**
 ```json
 {
   "type": "node",
   "request": "launch",
-  "program": "${workspaceFolder}/src/index.ts",
-  "runtimeArgs": ["-r", "tsx/cjs"]
+  "name": "Express - Launch",
+  "program": "${workspaceFolder}/packages/express-demo/src/index.ts",
+  "runtimeArgs": ["-r", "tsx/cjs"],
+  "console": "integratedTerminal",
+  "cwd": "${workspaceFolder}/packages/express-demo",
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "3000"
+  },
+  "skipFiles": ["<node_internals>/**"],
+  "serverReadyAction": {
+    "pattern": "(http://localhost:\\d+)",
+    "uriFormat": "%s",
+    "action": "openExternally"
+  }
 }
 ```
 
-**使用 nodemon：**
+**Attach 模式（配合 nodemon）：**
 ```json
 {
   "type": "node",
-  "request": "launch",
-  "runtimeExecutable": "nodemon",
-  "program": "${workspaceFolder}/src/index.ts",
-  "restart": true
+  "request": "attach",
+  "name": "Express - Attach",
+  "port": 9229,
+  "restart": true,
+  "skipFiles": ["<node_internals>/**"]
 }
 ```
+
+**使用 Attach 模式的步骤：**
+1. 在 package.json 中配置 `"start:inspect": "nodemon --inspect src/index.ts"`
+2. 终端运行 `pnpm start:inspect`
+3. VSCode 选择 "Express - Attach" 配置并按 F5
+
+**关键参数说明：**
+- `runtimeArgs: ["-r", "tsx/cjs"]`: 使用 tsx 运行 TypeScript 文件（推荐，速度快）
+- `serverReadyAction`: 检测服务器启动后自动打开浏览器
+- `restart: true`: 程序文件改变时自动重启调试器（Attach 模式）
+- `env`: 设置环境变量
 
 ### Jest 测试
 
@@ -197,23 +256,41 @@ VSCode 支持多种调试器：
 {
   "type": "node",
   "request": "launch",
-  "program": "${workspaceFolder}/node_modules/.bin/jest",
+  "name": "Jest - Current File",
+  "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
   "args": [
     "${relativeFile}",
-    "--runInBand"
-  ]
+    "--config=${workspaceFolder}/packages/jest-demo/jest.config.js",
+    "--runInBand",
+    "--no-coverage"
+  ],
+  "cwd": "${workspaceFolder}/packages/jest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen"
 }
 ```
 
-**调试特定测试：**
+**调试所有测试：**
 ```json
 {
+  "type": "node",
+  "request": "launch",
+  "name": "Jest - All Tests",
+  "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
   "args": [
-    "--testNamePattern=测试名称",
-    "--runInBand"
-  ]
+    "--runInBand",
+    "--config=${workspaceFolder}/packages/jest-demo/jest.config.js"
+  ],
+  "cwd": "${workspaceFolder}/packages/jest-demo",
+  "console": "integratedTerminal"
 }
 ```
+
+**关键参数说明：**
+- `--runInBand`: 串行运行测试（不使用多进程），调试必需，会降低速度
+- `--no-coverage`: 禁用代码覆盖率收集，加快调试速度
+- `--config`: 明确指定 Jest 配置文件路径
+- `cwd`: 工作目录，影响相对路径的解析
 
 ### Vitest 测试
 
@@ -222,71 +299,202 @@ VSCode 支持多种调试器：
 {
   "type": "node",
   "request": "launch",
+  "name": "Vitest - Current File",
   "runtimeExecutable": "pnpm",
-  "runtimeArgs": [
-    "vitest",
-    "run",
-    "${relativeFile}"
-  ]
+  "runtimeArgs": ["vitest", "run", "${file}"],
+  "cwd": "${workspaceFolder}/packages/vitest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
 }
 ```
+
+**调试所有测试：**
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Vitest - All Tests",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["vitest", "run"],
+  "cwd": "${workspaceFolder}/packages/vitest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
+}
+```
+
+**Watch 模式（自动重新运行）：**
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Vitest - Watch Mode",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["vitest"],
+  "cwd": "${workspaceFolder}/packages/vitest-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
+}
+```
+
+**关键参数说明：**
+- `pnpm vitest run`: 单次运行模式（调试模式）
+- `pnpm vitest`: watch 模式，文件变化时自动重新运行
+- Vitest 会自动检测调试器并禁用并行执行
+- `runtimeExecutable: "pnpm"`: 通过 pnpm 调用 vitest 命令
 
 ### npm scripts
 
-**直接调试脚本：**
+**通过 npm 运行脚本：**
 ```json
 {
   "type": "node",
   "request": "launch",
-  "program": "${file}"
+  "name": "npm script - Start",
+  "runtimeExecutable": "npm",
+  "runtimeArgs": ["run-script", "start"],
+  "cwd": "${workspaceFolder}/packages/npm-script-demo",
+  "console": "integratedTerminal",
+  "skipFiles": ["<node_internals>/**"]
 }
 ```
 
-**通过 npm 调试：**
+**在集成终端中运行脚本（node-terminal）：**
 ```json
 {
-  "type": "node",
+  "type": "node-terminal",
+  "name": "npm script - Start (Terminal)",
   "request": "launch",
-  "runtimeExecutable": "npm",
-  "runtimeArgs": ["run", "build"]
+  "command": "npm start",
+  "cwd": "${workspaceFolder}/packages/npm-script-demo"
 }
 ```
+
+**关键参数说明：**
+- `runtimeExecutable: "npm"`: 使用 npm 作为运行时
+- `runtimeArgs: ["run-script", "start"]`: 相当于 `npm run-script start`
+- `type: "node-terminal"`: 在集成终端中运行（不是调试模式）
+- `--config`: 指定脚本配置文件路径
 
 ### Puppeteer
 
-**基础配置：**
+**自动填表脚本调试：**
 ```json
 {
   "type": "node",
   "request": "launch",
-  "program": "${file}",
-  "console": "integratedTerminal"
+  "name": "Puppeteer - Auto Fill Form",
+  "program": "${workspaceFolder}/packages/puppeteer-demo/scripts/auto-fill-form.js",
+  "cwd": "${workspaceFolder}/packages/puppeteer-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+  "env": {
+    "HEADLESS": "false"
+  },
+  "preLaunchTask": "puppeteer-demo: start-server",
+  "postDebugTask": "kill-puppeteer-demo-dev"
 }
 ```
 
-**建议设置：**
-```javascript
-puppeteer.launch({
-  headless: false,  // 显示浏览器
-  slowMo: 100,      // 慢动作
-  devtools: true    // 打开 DevTools
-})
+**Chrome 浏览器调试（附加）：**
+```json
+{
+  "type": "chrome",
+  "request": "attach",
+  "name": "Puppeteer - Chrome Attach",
+  "port": 9222,
+  "webRoot": "${workspaceFolder}/packages/puppeteer-demo",
+  "urlFilter": "http://localhost:5173/*",
+  "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+}
 ```
+
+**Full Stack Compound：**
+```json
+{
+  "name": "Puppeteer - Full Stack",
+  "configurations": [
+    "Puppeteer - Auto Fill Form",
+    "Puppeteer - Chrome Attach"
+  ],
+  "stopAll": true
+}
+```
+
+**关键参数说明：**
+- `HEADLESS=false`: 显示浏览器窗口（非无头模式）
+- `--remote-debugging-port=9222`: Chrome 远程调试端口
+- `preLaunchTask`: 启动前自动启动开发服务器
+- `postDebugTask`: 调试结束后自动清理进程
+- `urlFilter`: 只附加到特定 URL 的标签页
 
 ### Next.js
 
-**全栈调试（推荐）：**
+**全栈调试方式一：debugWithChrome（推荐）**
 ```json
 {
   "type": "node",
   "request": "launch",
+  "name": "Next.js - Full Stack",
   "runtimeExecutable": "pnpm",
   "runtimeArgs": ["next", "dev"],
   "serverReadyAction": {
-    "pattern": "started server on .+, url: (https?://.+)",
+    "pattern": "Local:\\s+(https?://.+)",
+    "action": "debugWithChrome",
     "uriFormat": "%s",
-    "action": "debugWithChrome"
-  }
+    "webRoot": "${workspaceFolder}/packages/nextjs-demo"
+  },
+  "cwd": "${workspaceFolder}/packages/nextjs-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
+}
+```
+
+**全栈调试方式二：startDebugging（自动启动）**
+```json
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Next.js - Server with startDebugging",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["next", "dev"],
+  "serverReadyAction": {
+    "pattern": "Local:\\s+(https?://.+)",
+    "action": "startDebugging",
+    "name": "Next.js - Client Launch"
+  },
+  "cwd": "${workspaceFolder}/packages/nextjs-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
+}
+```
+
+配合客户端配置：
+```json
+{
+  "type": "chrome",
+  "request": "launch",
+  "name": "Next.js - Client Launch",
+  "url": "http://localhost:3000",
+  "webRoot": "${workspaceFolder}/packages/nextjs-demo"
+}
+```
+
+**全栈调试方式三：Compound（完全控制）**
+```json
+{
+  "compounds": [
+    {
+      "name": "Next.js - Full Stack (Compound)",
+      "configurations": ["Next.js - Server", "Next.js - Client Launch"],
+      "stopAll": true
+    }
+  ]
 }
 ```
 
@@ -295,12 +503,25 @@ puppeteer.launch({
 {
   "type": "node",
   "request": "launch",
+  "name": "Next.js - Server",
   "runtimeExecutable": "pnpm",
-  "runtimeArgs": ["next", "dev"]
+  "runtimeArgs": ["next", "dev"],
+  "cwd": "${workspaceFolder}/packages/nextjs-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
 }
 ```
 
-**调试要点：**
+**三种方式对比：**
+
+| 方式            | 优点                     | 缺点                       | 适用场景                   |
+| --------------- | ------------------------ | -------------------------- | -------------------------- |
+| debugWithChrome | 配置简单，自动启动浏览器 | 调试会话合并，控制粒度较粗 | 日常开发，快速全栈调试     |
+| startDebugging  | 自动化程度高，会话独立   | 配置稍复杂，需要两个配置   | 需要独立控制服务器和客户端 |
+| Compound        | 完全手动控制，灵活性最高 | 需要手动管理多个会话       | 复杂调试场景，需要精细控制 |
+
+**关键要点：**
 - Server Components 在服务端执行，使用 Node.js 调试器
 - Client Components 在浏览器执行，使用 Chrome 调试器
 - API Routes 在服务端执行
@@ -314,27 +535,31 @@ puppeteer.launch({
 {
   "type": "node",
   "request": "launch",
-  "program": "${workspaceFolder}/node_modules/.bin/webpack",
-  "args": [
-    "--config",
-    "webpack.config.js",
-    "--mode",
-    "development"
-  ]
+  "name": "Webpack - Build",
+  "runtimeExecutable": "pnpm",
+  "runtimeArgs": ["run", "build:dev"],
+  "cwd": "${workspaceFolder}/packages/webpack-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
 }
 ```
 
-**调试 Dev Server：**
+**调试 Dev Server 并在浏览器中调试：**
 ```json
 {
-  "type": "node",
+  "type": "chrome",
   "request": "launch",
-  "program": "${workspaceFolder}/node_modules/.bin/webpack",
-  "args": [
-    "serve",
-    "--config",
-    "webpack.config.js"
-  ]
+  "name": "Webpack - Launch Chrome",
+  "url": "http://localhost:9000",
+  "webRoot": "${workspaceFolder}/packages/webpack-demo",
+  "preLaunchTask": "webpack: serve",
+  "serverReadyAction": {
+    "pattern": "webpack.*compiled",
+    "action": "openExternally"
+  },
+  "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+  "postDebugTask": "kill-webpack-serve"
 }
 ```
 
@@ -343,65 +568,140 @@ puppeteer.launch({
 - 在 Plugin 的 apply 方法中设置断点
 - 在 Hook 回调中设置断点观察编译过程
 - 使用 compilation.assets 查看生成的文件
+- 在浏览器中调试打包后的代码
 
 ### TypeScript 独立调试
 
-**使用 tsx（推荐）：**
+**使用 tsx（推荐，启动快）：**
 ```json
 {
   "type": "node",
   "request": "launch",
+  "name": "TypeScript - Current File (tsx)",
   "program": "${file}",
-  "runtimeArgs": ["-r", "tsx/cjs"]
+  "runtimeArgs": ["-r", "tsx/cjs"],
+  "cwd": "${workspaceFolder}/packages/typescript-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"]
 }
 ```
 
-**使用 ts-node：**
+**使用 ts-node（完整类型检查）：**
 ```json
 {
   "type": "node",
   "request": "launch",
+  "name": "TypeScript - Current File (ts-node)",
   "program": "${file}",
   "runtimeArgs": ["-r", "ts-node/register"],
+  "cwd": "${workspaceFolder}/packages/typescript-demo",
+  "console": "integratedTerminal",
+  "internalConsoleOptions": "neverOpen",
+  "skipFiles": ["<node_internals>/**"],
   "env": {
-    "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
+    "TS_NODE_PROJECT": "${workspaceFolder}/packages/typescript-demo/tsconfig.json"
   }
 }
 ```
 
-**tsx vs ts-node：**
-- tsx: 启动快，不做类型检查，基于 esbuild
-- ts-node: 完整类型检查，启动较慢
-- 日常调试推荐 tsx，CI/CD 推荐 ts-node
+**tsx vs ts-node 对比：**
+
+| 特性     | tsx                  | ts-node          |
+| -------- | -------------------- | ---------------- |
+| 启动速度 | 极快（基于 esbuild） | 较慢             |
+| 类型检查 | 无                   | 完整             |
+| 适用场景 | 日常调试开发         | CI/CD 和严格检查 |
+| 推荐度   | ⭐⭐⭐⭐⭐                | ⭐⭐⭐              |
 
 **调试要点：**
 - 泛型类型在运行时被擦除，调试时看不到类型参数
 - 接口和类型别名不存在于运行时
 - 装饰器是运行时特性，可以设置断点
+- 可以在 Debug Console 中直接执行 TypeScript 代码
 
 ### Rust
 
-**调试二进制：**
+**调试二进制程序：**
 ```json
 {
   "type": "lldb",
   "request": "launch",
+  "name": "Rust - Debug hello",
   "cargo": {
-    "args": ["build", "--bin=hello"]
+    "args": [
+      "build",
+      "--bin=hello",
+      "--package=rust-demo",
+      "--manifest-path=${workspaceFolder}/packages/rust-demo/Cargo.toml"
+    ],
+    "filter": {
+      "name": "hello",
+      "kind": "bin"
+    }
+  },
+  "args": [],
+  "cwd": "${workspaceFolder}/packages/rust-demo",
+  "sourceLanguages": ["rust"]
+}
+```
+
+**调试所有单元和集成测试：**
+```json
+{
+  "type": "lldb",
+  "request": "launch",
+  "name": "Rust - Debug All Tests",
+  "cargo": {
+    "args": [
+      "test",
+      "--no-run",
+      "--lib",
+      "--package=rust-demo",
+      "--manifest-path=${workspaceFolder}/packages/rust-demo/Cargo.toml"
+    ]
+  },
+  "args": ["--nocapture", "--test-threads=1"],
+  "cwd": "${workspaceFolder}/packages/rust-demo",
+  "sourceLanguages": ["rust"],
+  "env": {
+    "RUST_BACKTRACE": "short"
   }
 }
 ```
 
-**调试测试：**
+**调试特定测试：**
 ```json
 {
   "type": "lldb",
   "request": "launch",
+  "name": "Rust - Debug Specific Test",
   "cargo": {
-    "args": ["test", "--no-run"]
+    "args": [
+      "test",
+      "--no-run",
+      "--lib",
+      "--package=rust-demo",
+      "--manifest-path=${workspaceFolder}/packages/rust-demo/Cargo.toml"
+    ]
+  },
+  "args": ["${input:rustTestName}", "--nocapture", "--test-threads=1"],
+  "cwd": "${workspaceFolder}/packages/rust-demo",
+  "sourceLanguages": ["rust"],
+  "env": {
+    "RUST_BACKTRACE": "short"
   }
 }
 ```
+
+**关键参数说明：**
+- `type: "lldb"`: 使用 LLDB 调试器（需要安装 CodeLLDB 扩展）
+- `--bin=hello`: 调试指定名称的二进制程序
+- `--no-run`: 编译但不运行测试
+- `--test-threads=1`: 单线程运行测试（便于调试）
+- `--nocapture`: 显示 println! 的输出
+- `RUST_BACKTRACE=short`: 显示简短的堆栈跟踪
+- `${input:rustTestName}`: 允许用户输入测试函数名
 
 ## 调试技巧
 
