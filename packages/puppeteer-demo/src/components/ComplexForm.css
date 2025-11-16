@@ -6,8 +6,8 @@
 fieldset {
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 20px;
-  margin-bottom: 24px;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
 legend {
@@ -20,8 +20,8 @@ legend {
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .form-group {

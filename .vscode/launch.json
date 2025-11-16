@@ -40,6 +40,25 @@
         "order": 2
       }
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest - Run Specific Test",
+      "program": "${workspaceFolder}/packages/jest-demo/node_modules/jest/bin/jest.js",
+      "args": [
+        "--testNamePattern=${input:jestTestName}",
+        "--config=${workspaceFolder}/packages/jest-demo/jest.config.js",
+        "--runInBand",
+        "--no-coverage"
+      ],
+      "cwd": "${workspaceFolder}/packages/jest-demo",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "01. Jest",
+        "order": 3
+      }
+    },
 
     // ========================================
     // 📦 vitest-demo
@@ -155,7 +174,8 @@
         "pattern": "Local:\\s+(https?://.+)",
         "action": "debugWithChrome",
         "uriFormat": "%s",
-        "webRoot": "${workspaceFolder}/packages/nextjs-demo"
+        "webRoot": "${workspaceFolder}/packages/nextjs-demo",
+        "killOnServerStop": true
       },
       "cwd": "${workspaceFolder}/packages/nextjs-demo",
       "console": "integratedTerminal",
@@ -473,6 +493,12 @@
       "id": "rustTestName",
       "type": "promptString",
       "description": "输入要调试的测试函数名",
+      "default": ""
+    },
+    {
+      "id": "jestTestName",
+      "type": "promptString",
+      "description": "输入要运行的测试名称（支持正则表达式）",
       "default": ""
     }
   ],

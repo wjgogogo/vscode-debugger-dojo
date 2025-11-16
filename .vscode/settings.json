@@ -1,8 +1,4 @@
 {
-  // 调试设置
-  "debug.javascript.autoAttachFilter": "disabled",
-  "debug.javascript.codelens.npmScripts": "top",
-
   // Jest 设置
   "jest.runMode": "on-demand",
 

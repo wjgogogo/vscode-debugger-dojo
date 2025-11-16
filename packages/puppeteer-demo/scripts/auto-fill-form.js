@@ -42,14 +42,14 @@ async function autoFillForm() {
     const page = await browser.newPage();
 
     // 设置视口大小
-    await page.setViewport({ width: 1280, height: 1024 });
+    await page.setViewport({ width: 1000, height: 750 });
 
     log(`导航到 ${config.url}`);
     await page.goto(config.url, { waitUntil: "networkidle2" });
 
     // 给调试器连接足够的时间
     log("等待调试器连接...");
-    await delay(3000);
+    await delay(1000);
 
     log("开始填写表单...");
 
